@@ -24,7 +24,7 @@ app.use('/zk', express.static(path.join(__dirname, '../proofs')))
   // Adicione outros hashes + endereços conforme necessário
 } */
 
-const addressMapPath = path.join(__dirname, './data/addressMap.json')
+const addressMapPath = path.join(__dirname, '../data/addressMap.json')
 let addressMap:Record<string, string> = {}
 
 try{
@@ -34,27 +34,37 @@ try{
   console.warn(`Arquivo de endereço não encontrado, usando objeto vazio: ${e}`)
 }
 
+const hashesToRemove = [
+  '773668153615177095203986942871233414730629758539188537919101258732514900502'
+]
+
+hashesToRemove.forEach(hash=>{
+  delete addressMap[hash]
+})
+
+fs.writeFileSync(addressMapPath, JSON.stringify(addressMap, null, 2))
+
 
 app.post('/register-code', async(req:Request, res:Response) => {
   try{
-        const { code, address } = req.body
-        if(!code || !address){
-          return res.status(400).json({ error: 'Código e endereço são obrigatórios '})
+        const { address } = req.body
+        const randomCode = (Math.random() * 10).toString().substring(3)
+        if(!address){
+          return res.status(400).json({ error: 'O endereço é obrigatório '})
         }
 
-        const snarkjs = await import('snarkjs')
+        //const snarkjs = await import('snarkjs')
         const circomlibjs = await import('circomlibjs')
         const poseidon = await circomlibjs.buildPoseidon()
-        const hashBigInt = poseidon([BigInt(code)])
+        const hashBigInt = poseidon([BigInt(randomCode)])
         const hashDecimal = poseidon.F.toString(hashBigInt)
 
         addressMap[hashDecimal] = address
         fs.writeFileSync(addressMapPath, JSON.stringify(addressMap, null, 2))
 
         res.json({
-          message: 'Código registrado com sucesso',
-          hash: hashDecimal,
-          address
+          message: 'Código referente ao endereço registrado',
+          code: randomCode
         })
 
   }catch(error){
