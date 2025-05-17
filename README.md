@@ -2,7 +2,7 @@
 
 **Privacidade em Logística com Provas de Conhecimento Zero**
 
-O `zk-delivery` é um projeto full-stack com foco em **privacidade na entrega de produtos** usando **Zero-Knowledge Proofs (ZKPs)**. Utiliza tecnologias como **Circom**, **snarkjs**, **zkverifyjs** e **Next.js**, com potencial de aplicação no futuro da logística com drones e automação.
+O `zk-delivery` é um projeto full-stack com foco em **privacidade na entrega de produtos** usando **Zero-Knowledge Proofs (ZKPs)**. Utiliza tecnologias como **Circom**, **snarkjs**, **zkverifyjs** e **React.js**, com potencial de aplicação no futuro da logística com drones e automação.
 
 ---
 
@@ -25,8 +25,8 @@ Resultado: **nenhum dado pessoal exposto**, nenhuma fraude, entrega garantida co
 | Circom         | Escrita do circuito ZK para validação do código  |
 | snarkjs        | Geração de provas ZK com o circuito             |
 | zkverifyjs     | Verificação de provas via API zkVerify          |
-| Next.js        | Frontend para interação do entregador/cliente    |
-| Rust (Axum)    | (Opcional) Backend para orquestração e API REST |
+| React.js       | Frontend para interação do entregador/cliente    |
+| Nodejs         | Backend para orquestração e API REST             |
 
 ---
 
